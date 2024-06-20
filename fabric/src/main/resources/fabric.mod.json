@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "omegaconfig",
+  "version": "${version}",
+  "name": "Omega Config Architectury",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Me!"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "LICENSE",
+  "icon": "assets/omega-config/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.frqnny.omegaconfig.fabric.OmegaConfigFabric"
+    ]
+  },
+  "mixins": [
+    "omega-config.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": "~1.20.6",
+    "java": ">=21",
+    "architectury": ">=12.1.2",
+    "fabric-api": "*"
+  }
+}
