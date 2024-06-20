@@ -67,6 +67,7 @@ repositories {
 }
 
 // 1.20.6 : 1.5.0
+// 1.21 : 1.5.1
 dependencies {
     //for common module (architectury)
     modImplementation "io.github.frqnny:omegaconfig-common:${project.omega_config_version}"

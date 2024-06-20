@@ -26,7 +26,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 public final class OmegaConfig {
@@ -235,7 +234,7 @@ public final class OmegaConfig {
     }
 
     public record SyncConfigPayload(NbtCompound nbtCompound) implements CustomPayload {
-        public static final Identifier CONFIG_SYNC_PACKET = new Identifier("omegaconfig", "sync");
+        public static final Identifier CONFIG_SYNC_PACKET = Identifier.of(OmegaConfig.MOD_ID, "sync");
         public static final CustomPayload.Id<SyncConfigPayload> ID = new Id<>(CONFIG_SYNC_PACKET);
         public static final PacketCodec<PacketByteBuf, SyncConfigPayload> CODEC = PacketCodecs.NBT_COMPOUND.xmap(SyncConfigPayload::new, SyncConfigPayload::nbtCompound).cast();
 
