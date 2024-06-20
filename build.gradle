@@ -24,11 +24,7 @@ subprojects {
     }
 
     repositories {
-        // Add repositories to retrieve artifacts from in here.
-        // You should only use this when depending on other mods because
-        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-        // for more information about repositories.
+
     }
 
     dependencies {
@@ -55,24 +51,22 @@ subprojects {
 
     // Configure Maven publishing.
     publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId = base.archivesName.get()
-                from components.java
-            }
-        }
-
-        // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
         repositories {
             maven {
                 name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/frqnny/omega-config-architectury")
+                url = "https://maven.pkg.github.com/frqnny/omega-config-architectury"
                 credentials {
-                    username = System.getenv("GPUSERNAME")
-                    password = System.getenv("GPTOKEN")
+                    username = System.getenv("GITHUB_USERNAME")
+                    password = System.getenv("GITHUB_TOKEN")
                 }
             }
+        }
 
+        publications {
+            gpr(MavenPublication) {
+                artifactId = base.archivesName.get()
+                from(components.java)
+            }
         }
     }
 }

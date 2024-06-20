@@ -57,12 +57,23 @@ you can use the following gradle declarations:
 
 ```groovy
 repositories {
-    maven { url 'https://maven.draylar.dev/releases' }
+    maven {
+        url = uri("https://maven.pkg.github.com/frqnny/omega-config-architectury")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+        }
+    }
 }
 
 // 1.20.6 : 1.5.0
 dependencies {
-    modImplementation include("io.draylar.omega-config:omega-config-base:${project.omega_config_version}")
+    //for common module (architectury)
+    modImplementation "io.github.frqnny:omegaconfig-common:${project.omega_config_version}"
+    //for fabric
+    modImplementation include("io.github.frqnny:omegaconfig-fabric:${project.omega_config_version}")
+    //for neoforge
+    modImplementation include("io.github.frqnny:omegaconfig-neoforge:${project.omega_config_version}")
 }
 ```
 

@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'omega-config'
+rootProject.name = 'omegaconfig'
 
 include 'common'
 include 'fabric'
