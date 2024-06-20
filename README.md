@@ -93,7 +93,8 @@ MyModInitializer.CONFIG.save(); // writes the new value to disk
 ```
 
 
-`@Syncing` - *configuration options marked with this annotation will automatically sync to the client when they join a server.*
+`@Syncing` - *configuration options marked with this annotation will automatically sync to the client when they join a server.
+You can use this on a class to sync the entire config file to the client.*
 
 ---
 
