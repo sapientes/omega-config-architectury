@@ -1,6 +1,5 @@
 package io.github.frqnny.omegaconfig.util;
 
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import dev.architectury.platform.Platform;
 import io.github.frqnny.omegaconfig.api.Config;
 

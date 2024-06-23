@@ -94,7 +94,7 @@ public class ClientMixin {
                                 Object preSyncValue = field.get(config);
                                 field.set(potentiallySynced, preSyncValue);
                             } catch (IllegalAccessException e) {
-                                e.printStackTrace();
+                                OmegaConfig.LOGGER.error(e);
                             }
                         }
                     }
