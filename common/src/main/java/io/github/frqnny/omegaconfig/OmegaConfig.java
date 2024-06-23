@@ -16,6 +16,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,22 +41,28 @@ public final class OmegaConfig {
         if (Platform.getEnv() == EnvType.SERVER) {
             NetworkManager.registerS2CPayloadType(SyncConfigPayload.ID, SyncConfigPayload.CODEC);
         }
-        PlayerEvent.PLAYER_JOIN.register(serverPlayer -> serverPlayer.server.execute(() -> {
-            NbtCompound root = new NbtCompound();
-            NbtList configurations = new NbtList();
+        PlayerEvent.PLAYER_JOIN.register(serverPlayer -> {
+            var server = serverPlayer.server;
+            if (server instanceof IntegratedServer integratedServer && !integratedServer.isRemote()) {
+                return; // do not sync config in an integrated server, unless it's open to connections
+            }
+            server.execute(() -> {
+                NbtCompound root = new NbtCompound();
+                NbtList configurations = new NbtList();
 
-            // Iterate over each configuration.
-            // Find values that should be synced and send the value over.
-            OmegaConfig.getRegisteredConfigurations().forEach(config -> {
-                if (config.hasAnySyncable()) {
-                    configurations.add(config.writeSyncingTag());
-                }
+                // Iterate over each configuration.
+                // Find values that should be synced and send the value over.
+                OmegaConfig.getRegisteredConfigurations().forEach(config -> {
+                    if (config.hasAnySyncable()) {
+                        configurations.add(config.writeSyncingTag());
+                    }
+                });
+
+                // save to packet and send to user
+                root.put("Configurations", configurations);
+                NetworkManager.sendToPlayer(serverPlayer, new SyncConfigPayload(root));
             });
-
-            // save to packet and send to user
-            root.put("Configurations", configurations);
-            NetworkManager.sendToPlayer(serverPlayer, new SyncConfigPayload(root));
-        }));
+        });
     }
 
 
