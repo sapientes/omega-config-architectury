@@ -2,7 +2,6 @@ package io.github.frqnny.omegaconfig.api;
 
 import io.github.frqnny.omegaconfig.OmegaConfig;
 import net.minecraft.nbt.NbtCompound;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
@@ -58,25 +57,6 @@ public interface Config {
      * @return the name of this config, which is used for the name of the config file saved to disk.
      */
     String getName();
-
-    /**
-     * Returns the modid associated with this configuration class.
-     *
-     * <p>
-     * This functionality is used for libraries like ModMenu, which depend on
-     * modids for configuration screen instances in their menu.
-     * If you are intending for this config to have a ModMenu config
-     * screen, this method should return the modid specified in your fabric.mod.json.
-     * <p>
-     * If this method is not overridden, null will be returned, which
-     * means this config is not explicitly associated with any particular mod.
-     *
-     * @return the modid of the mod associated with this config, or null if none was specified
-     */
-    @Nullable
-    default String getModid() {
-        return null;
-    }
 
     /**
      * Returns the file extension of this config.
