@@ -1,7 +1,6 @@
 package io.github.frqnny.omegaconfig.mixin;
 
 import dev.architectury.networking.NetworkManager;
-import dev.architectury.platform.Platform;
 import io.github.frqnny.omegaconfig.OmegaConfig;
 import io.github.frqnny.omegaconfig.api.Config;
 import io.github.frqnny.omegaconfig.api.Syncing;
@@ -63,11 +62,12 @@ public class ClientMixin {
                                             Object serverValue = field.get(server);
                                             field.set(config, serverValue);
                                         } catch (IllegalAccessException e) {
-                                            e.printStackTrace();
+                                            OmegaConfig.LOGGER.error(e);
                                         }
                                     }
                                 }
-
+                                OmegaConfig.LOGGER.info("Received {} configuration from server.", name);
+                                server.onConfigSynced();
                                 break;
                             }
                         }

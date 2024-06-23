@@ -107,4 +107,12 @@ public interface Config {
     default String getDirectory() {
         return "";
     }
+
+    /**
+     * A method called when the configuration has been synced from the server to the client.
+     * Override it to have custom logic run when the configuration is synced.
+     */
+    default void onConfigSynced() {
+
+    }
 }
