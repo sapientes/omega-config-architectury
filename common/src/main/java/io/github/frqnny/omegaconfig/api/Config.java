@@ -41,7 +41,7 @@ public interface Config {
     default boolean hasAnySyncable() {
         boolean hasSyncingField = Arrays.stream(getClass().getDeclaredFields()).anyMatch(field -> Arrays.stream(field.getDeclaredAnnotations()).anyMatch(annotation -> annotation instanceof Syncing));
         boolean classSyncs = Arrays.stream(getClass().getDeclaredAnnotations()).anyMatch(annotation -> annotation instanceof Syncing);
-        return hasSyncingField | classSyncs;
+        return hasSyncingField || classSyncs;
     }
 
     /**

@@ -33,6 +33,3 @@ type = "required"
 versionRange = "[13.0.1,)"
 ordering = "AFTER"
 side = "BOTH"
-
-[[mixins]]
-config = "omega-config.mixins.json"

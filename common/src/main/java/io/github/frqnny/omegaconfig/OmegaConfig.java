@@ -37,7 +37,6 @@ public final class OmegaConfig {
     private static final List<Config> REGISTERED_CONFIGURATIONS = new ArrayList<>();
 
     public static void init() {
-        // Write common init code here.
         if (Platform.getEnv() == EnvType.SERVER) {
             NetworkManager.registerS2CPayloadType(SyncConfigPayload.ID, SyncConfigPayload.CODEC);
         }
@@ -132,7 +131,7 @@ public final class OmegaConfig {
             String at = lines.get(i);
             String startingWhitespace = getStartingWhitespace(at);
 
-            for (Map.Entry<String, String> entry : keyToComments.entrySet()) {
+            for (var entry : keyToComments.entrySet()) {
                 String comment = entry.getValue();
                 // Check if we should insert comment
                 if (at.trim().startsWith(String.format("\"%s\"", entry.getKey()))) {
@@ -148,7 +147,7 @@ public final class OmegaConfig {
         }
 
         // insertions -> list
-        for (Map.Entry<Integer, String> entry : insertions.entrySet()) {
+        for (var entry : insertions.entrySet()) {
             Integer key = entry.getKey();
             String value = entry.getValue();
             lines.add(key, value);
