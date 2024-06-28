@@ -11,7 +11,7 @@ achieve the following goals:
 - Intuition and usability for players
 - Bonus annotations for advanced config options (syncing values)
 
-This is a fork of the original <a href="https://github.com/Draylar/omega-config">Omega Config</a>, built for use in architectury mods by Frqnny. However, it is available for anyone. 
+This is a fork of the original <a href="https://github.com/Draylar/omega-config">Omega Config</a>, built for use in architectury mods by Frqnny and thus depends on Architectury API. However, it is available for anyone. 
 If you have any questions or issues, please feel free to reach out to my discord: https://discord.gg/uvqTeQzQXK
 
 The following is an example of a simple ΩConfig setup:
@@ -51,9 +51,8 @@ public class MyModInitializer {
 ### Pulling Omega Config into Development
 
 To use Omega Config, you will have to add it to your build.gradle file.
-
-What you pull in depends on whether you want GUI functionality. For basic config files using the base module (~20KB),
-you can use the following gradle declarations:
+Until Frqnny finds a maven server to host their builds, this library uses Github Packages
+and requires you to use your github credentials.
 
 ```groovy
 repositories {
@@ -71,9 +70,9 @@ repositories {
 dependencies {
     //for common module (architectury)
     modImplementation "io.github.frqnny:omegaconfig-common:${project.omega_config_version}"
-    //for fabric
+    //for fabric module
     modImplementation include("io.github.frqnny:omegaconfig-fabric:${project.omega_config_version}")
-    //for neoforge
+    //for neoforge module
     modImplementation include("io.github.frqnny:omegaconfig-neoforge:${project.omega_config_version}")
 }
 ```
@@ -95,7 +94,7 @@ MyModInitializer.CONFIG.save(); // writes the new value to disk
 
 
 `@Syncing` - *configuration options marked with this annotation will automatically sync to the client when they join a server.
-You can use this on a class to sync the entire config file to the client.*
+You can use this on a class to sync the entire config file to the client. Overriding `onConfigSynced` allows you to implement custom logic after the config is synchronized to the client.*
 
 ---
 
