@@ -51,7 +51,7 @@ public class OmegaConfigClient {
                                             Object serverValue = field.get(serverConfig);
                                             field.set(config, serverValue);
                                         } catch (IllegalAccessException e) {
-                                            OmegaConfig.LOGGER.error(e);
+                                            OmegaConfig.LOGGER.error("Failed to set server config field to client config!", e);
                                         }
                                     }
                                 }
@@ -80,7 +80,7 @@ public class OmegaConfigClient {
                                     Object preSyncValue = field.get(config);
                                     field.set(potentiallySynced, preSyncValue);
                                 } catch (IllegalAccessException e) {
-                                    OmegaConfig.LOGGER.error(e);
+                                    OmegaConfig.LOGGER.error("Failed to set pre-sync field in client config", e);
                                 }
                             }
                         }

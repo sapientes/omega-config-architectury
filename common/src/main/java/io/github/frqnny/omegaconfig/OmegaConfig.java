@@ -18,8 +18,8 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -33,7 +33,7 @@ public final class OmegaConfig {
     public static final String MOD_ID = "omegaconfig";
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     public static final Gson SYNC_ONLY_GSON = new GsonBuilder().addSerializationExclusionStrategy(new SyncableExclusionStrategy()).setPrettyPrinting().create();
-    public static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LoggerFactory.getLogger("OmegaConfig");
     private static final List<Config> REGISTERED_CONFIGURATIONS = new ArrayList<>();
 
     public static void init() {
@@ -91,17 +91,16 @@ public final class OmegaConfig {
                     REGISTERED_CONFIGURATIONS.add(object);
                     return object;
                 } catch (Exception e) {
-                    LOGGER.error(e);
-                    LOGGER.info(String.format("Encountered an error while reading %s config, falling back to default values.", config.getName()));
-                    LOGGER.info(String.format("If this problem persists, delete the config file %s and try again.", config.getName() + "." + config.getExtension()));
+                    LOGGER.error(String.format("Encountered an error while reading %s config, falling back to default values.", config.getName()));
+                    LOGGER.error(String.format("If this problem persists, delete the config file %s and try again.", config.getName() + "." + config.getExtension()), e);
                 }
             }
 
             return config;
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
                  InvocationTargetException exception) {
-            LOGGER.error(exception);
-            throw new RuntimeException("No valid constructor found for: " + configClass.getName());
+            LOGGER.error("No valid constructor found for: {}", configClass.getName(), exception);
+            return null;
         }
     }
 
@@ -162,8 +161,7 @@ public final class OmegaConfig {
             configPath.toFile().getParentFile().mkdirs();
             Files.write(configPath, res.toString().getBytes());
         } catch (IOException ioException) {
-            LOGGER.error(ioException);
-            LOGGER.info(String.format("Write error, using default values for config %s.", configClass));
+            LOGGER.error(String.format("Write error, using default values for config %s.", configClass), ioException);
         }
     }
 
